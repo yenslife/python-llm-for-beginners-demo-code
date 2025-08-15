@@ -1,0 +1,17 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# API keys
+.env
+
+# 因為只是 demo code，所以不需要將 uv.lock, .python-version 加入版本控制，可以讓專案更輕
+uv.lock
+.python-version
