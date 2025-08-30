@@ -18,6 +18,7 @@ SYSTEM_PROMPT = """你的任務是幫助使用者計算字母的數量。
 4. 使用**繁體中文**回答問題。
 """
 USER_PROMPT = "在 'strawberry' 這個單字中，有幾個字母 'r' 呢？"
+# USER_PROMPT = "請問在 apple,qqㄋㄟㄋㄟ 好喝到梅噗茶中，有幾個q" # 怪怪的回覆
 
 response = client.chat.completions.create(
     model=DEFAULT_MODEL,
