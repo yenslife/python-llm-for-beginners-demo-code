@@ -1,11 +1,11 @@
 import os
-import json
 
 import numpy as np
 from openai import OpenAI
 from dotenv import load_dotenv
 from rich import print
 from rich.progress import track
+
 from vector_store import VectorStore
 
 GEMINI_EMBEDDING_MODEL = "gemini-embedding-001"
@@ -38,7 +38,7 @@ def chunk_text(text, chunk_size=200, overlap=50):
 
 
 # 客製化的切 Chunk 版本
-def chunk_text_customize(text, chunk_size=500, overlap=50, delimiter="\n"):
+def chunk_text_customize(text, delimiter="\n"):
     chunks = []
     chinese_number = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"]
 
@@ -48,10 +48,7 @@ def chunk_text_customize(text, chunk_size=500, overlap=50, delimiter="\n"):
     for chunk in chunks:
         try:
             # 第一種：開頭中文數字表示為「條」，下一個是（表示為「款」
-            if (
-                chunk[0] in chinese_number
-                and chunks[chunks.index(chunk) + 1][0] == "（"
-            ):
+            if chunk[0] in chinese_number and chunks[chunks.index(chunk) + 1][0] == "（":
                 chunks.remove(chunk)
             # 第二種：開頭是（表示為「款」，下一個是數字表示為「條」
             if chunk[0] == "（" and chunks[chunks.index(chunk) + 1][0].isdigit():
@@ -62,10 +59,7 @@ def chunk_text_customize(text, chunk_size=500, overlap=50, delimiter="\n"):
     return chunks
 
 
-
 # 向量化
-
-
 def get_embedding(text):
     response = client.embeddings.create(
         input=text,
@@ -89,21 +83,23 @@ def build_vector_store(chunks):
 
 
 if __name__ == "__main__":
+    # 切塊
     chunks = chunk_text_customize(document)
 
     # 建立並儲存向量資料庫
-    print("Building vector store...")
+    print("正在建立向量資料庫...")
     vector_store = build_vector_store(chunks)
     vector_store.save_to_json("chunk_vectors.json")
-    print(f"Vector store built with {len(vector_store)} chunks")
+    print(f"向量資料庫建立完成，共 {len(vector_store)} 個文本塊")
+    # vector_store = VectorStore.load_from_json("chunk_vectors.json") # 若已建立好向量庫，可直接載入
 
     # 測試相似度搜尋
-    query = "宿舍規定"
+    query = "訪客留宿時間"
     query_embedding = get_embedding(query)
     similar_chunks = vector_store.search_similar(query_embedding, top_k=3)
 
-    print(f"\n[bold green]Query:[/bold green] {query}")
-    print("[bold blue]Most similar chunks:[/bold blue]")
+    print(f"\n查詢內容: {query}")
+    print("最相似的文本塊:")
     for chunk, similarity in similar_chunks:
-        print(f"Similarity: {similarity:.4f}")
-        print(f"Chunk: {chunk[:100]}...\n")
+        print(f"相似度: {similarity:.4f}")
+        print(f"內容: {chunk[:100]}...\n")
