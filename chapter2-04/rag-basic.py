@@ -7,6 +7,7 @@ from rich import print
 from rich.progress import track
 
 from vector_store import VectorStore
+from llm_provider import LLMProvider
 
 GEMINI_EMBEDDING_MODEL = "gemini-embedding-001"
 
@@ -91,15 +92,32 @@ if __name__ == "__main__":
     vector_store = build_vector_store(chunks)
     vector_store.save_to_json("chunk_vectors.json")
     print(f"向量資料庫建立完成，共 {len(vector_store)} 個文本塊")
-    # vector_store = VectorStore.load_from_json("chunk_vectors.json") # 若已建立好向量庫，可直接載入
+    ## 若已建立好向量庫，可直接載入 (記得把上面的程式碼註解掉)
+    # vector_store = VectorStore.load_from_json("chunk_vectors.json") 
 
     # 測試相似度搜尋
-    query = "訪客留宿時間"
+    query = "東寧宿舍的訪客留宿時間是幾點到幾點"
     query_embedding = get_embedding(query)
-    similar_chunks = vector_store.search_similar(query_embedding, top_k=3)
+    similar_chunks = vector_store.search_similar(query_embedding, top_k=10)
 
     print(f"\n查詢內容: {query}")
     print("最相似的文本塊:")
     for chunk, similarity in similar_chunks:
         print(f"相似度: {similarity:.4f}")
         print(f"內容: {chunk[:100]}...\n")
+
+    # 使用 LLMProvider 進行 RAG 回答
+    print("=" * 50)
+    print("使用 RAG 生成回答:")
+    print("=" * 50)
+
+    # 建立 LLM Provider
+    llm_provider = LLMProvider()
+
+    # 將檢索到的文本合併為 context
+    context = "\n\n".join([chunk for chunk, _ in similar_chunks])
+
+    # 生成回答
+    answer = llm_provider.generate_answer(query, context)
+    print(f"\n問題: {query}")
+    print(f"回答: {answer}")
