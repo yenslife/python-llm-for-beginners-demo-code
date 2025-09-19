@@ -27,6 +27,7 @@ response = client.chat.completions.create(
                     "type": "image_url",
                     "image_url": {
                         "url": f"data:image/jpeg;base64,{base64.b64encode(image_path.read_bytes()).decode()}"
+                        # "url": "https://raw.githubusercontent.com/yenslife/python-llm-for-beginners-demo-code/refs/heads/main/chapter2-05/example.jpg" # 也可以用圖片網址
                     },
                 },
             ],
