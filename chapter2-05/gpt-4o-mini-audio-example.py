@@ -42,5 +42,4 @@ transcript = response.choices[0].message.audio.transcript
 with open("response.mp3", "wb") as f:
     f.write(b64decode(audio_data))
 
-print(f"[bold green]Transcript:[/bold green] {transcript}")
-print(f"[bold green]Audio response saved to:[/bold green] response.mp3")
+print(f"Transcript:{transcript}")
