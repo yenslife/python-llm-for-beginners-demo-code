@@ -1,0 +1,21 @@
+FROM ./unsloth.Q4_K_M.gguf
+
+TEMPLATE """
+{{- if .System }}<|start_header_id|>system<|end_header_id|>
+{{ .System }}<|eot_id|>
+{{- end }}
+
+{{- range .Messages }}
+{{- if eq .Role "user" -}}
+<|start_header_id|>user<|end_header_id|>
+{{ .Content }}<|eot_id|>
+{{- else if eq .Role "assistant" -}}
+<|start_header_id|>assistant<|end_header_id|>
+{{ .Content }}<|eot_id|>
+{{- end }}
+{{- end }}
+
+<|start_header_id|>user<|end_header_id|>
+{{ .Prompt }}<|eot_id|>
+<|start_header_id|>assistant<|end_header_id|>
+"""
