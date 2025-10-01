@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv() # 也可以傳入檔名 load_dotenv(檔案名稱)
+load_dotenv()  # 也可以傳入檔名 load_dotenv(檔案名稱)
+
 
 def main():
     api_key = os.getenv("OPENAI_API_KEY")

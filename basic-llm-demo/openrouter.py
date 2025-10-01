@@ -4,7 +4,7 @@ from openai import OpenAI
 
 load_dotenv()
 
-api_key = os.getenv('OPEN_ROUTER_API_KEY')
+api_key = os.getenv("OPEN_ROUTER_API_KEY")
 
 client = OpenAI(api_key=api_key, base_url="https://openrouter.ai/api/v1")
 
