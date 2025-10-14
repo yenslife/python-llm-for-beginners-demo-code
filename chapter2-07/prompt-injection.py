@@ -1,6 +1,6 @@
 import os
 
-import openai
+from openai import OpenAI
 from dotenv import load_dotenv # 載入 dotenv 套件
 from rich import print
 
@@ -25,10 +25,7 @@ def answer_student_question(query):
     model_name = "gpt-3.5-turbo"
     # model_name = "gpt-4o-mini" # 新的模型較不會被 prompt injection
 
-    # 從環境變數中取得 API 金鑰，並且設定給 openai
-    openai.api_key = os.getenv("OPENAI_API_KEY") 
-
-    client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     completion = client.chat.completions.create(
         model=model_name,
         messages=[
