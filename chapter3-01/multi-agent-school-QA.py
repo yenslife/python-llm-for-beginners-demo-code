@@ -27,6 +27,7 @@ club_agent = Agent(
 # 主管 Agent，負責選擇適合的 Agent 來回答使用者的問題
 supervisor_agent = SupervisorAgent(
     name="SupervisorAgent",
+    model="gpt-4.1-mini", # 建議使用較聰明的模型來當 supervisor
     system_prompt="你是一個Supervisor Agent，負責選擇適合的子 Agent 來回答使用者的問題，若問題在你能力範圍之內可以直接回答。使用者會問和成大相關的問題，如果和Agent的專長無關，請回答 '無法判斷'。",
     agents=[dormitory_agent, club_agent],
 )
@@ -35,11 +36,12 @@ print(supervisor_agent.system_prompt)
 print("========================================")
 supervisor_agent.add_message(
     "user",
-    "請問成大大學部宿舍有哪些？成大有哪些資訊類社團？",
+    # "請問成大大學部宿舍有哪些？成大有哪些資訊類社團？",
     # "成大有哪些資訊類社團？請問成大大學部宿舍有哪些？",
+    "成大有哪些資訊類社團？請問成大研究生宿舍有哪些？",
     # "你好",
 )
 response = supervisor_agent.get_final_response()
 print("###########################")
-print(f"[bold yellow]Supervisor Agent 回答:[/bold yellow] {response}")
+print(f"Supervisor Agent 回答:\n{response}")
 print("###########################")
