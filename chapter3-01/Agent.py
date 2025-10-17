@@ -36,6 +36,12 @@ class Agent:
         self.messages.append({"role": role, "content": content})
 
     def get_response(self, response_format=None) -> str:
+        available_tools = {}
+
+        for i, schema in enumerate(self.tools):
+            tool_name = schema["function"]["name"]
+            available_tools[tool_name] = self.tools_implementation[i]
+
         response = client.chat.completions.create(
             model=DEFAULT_MODEL,
             temperature=self.temperature,
@@ -47,10 +53,6 @@ class Agent:
 
         tool_calls = response.choices[0].message.tool_calls
         response_message = response.choices[0].message
-        available_tools = {}
-        for i, schema in enumerate(self.tools):
-            tool_name = schema["function"]["name"]
-            available_tools[tool_name] = self.tools_implementation[i]
 
         if tool_calls:
             self.messages.append(response_message)
@@ -67,7 +69,7 @@ class Agent:
                             "content": tool_response,
                         }
                     )
-            return self.get_response()
+            return self.get_response() # 遞迴呼叫自己直到沒有工具呼叫為止
         print(f"{self.name} message 紀錄:")
         print(self.messages)
 
