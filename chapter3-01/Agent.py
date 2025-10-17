@@ -10,22 +10,32 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 DEFAULT_MODEL = "gpt-4o-mini"
 DEFAULT_TEMPERATURE = 0.2
 
-class Agent():
-    def __init__(self, name, model=DEFAULT_MODEL, temperature=DEFAULT_TEMPERATURE, system_prompt="", tools_implementation=[], tools=[]):
+
+class Agent:
+    def __init__(
+        self,
+        name,
+        model=DEFAULT_MODEL,
+        temperature=DEFAULT_TEMPERATURE,
+        system_prompt="",
+        tools_implementation=[],
+        tools=[],
+    ):
         self.name = name
         self.model = model
         self.temperature = temperature
         self.system_prompt = system_prompt
-        self.tools_implementation = tools_implementation # 函式的實作
-        self.tools = tools # 函式的定義(給 LLM 看的)
-        self.messages = [{"role": "system", "content": system_prompt}] if system_prompt else []
+        self.tools_implementation = tools_implementation  # 函式的實作
+        self.tools = tools  # 函式的定義(給 LLM 看的)
+        self.messages = (
+            [{"role": "system", "content": system_prompt}] if system_prompt else []
+        )
         self.response = None
 
-    
     def add_message(self, role, content):
         self.messages.append({"role": role, "content": content})
-        
-    def get_response(self, response_format = None) -> str:
+
+    def get_response(self, response_format=None) -> str:
         response = client.chat.completions.create(
             model=DEFAULT_MODEL,
             temperature=self.temperature,
@@ -49,21 +59,33 @@ class Agent():
                 tool_args = json.loads(tool_call.function.arguments)
                 if tool_name in available_tools:
                     tool_response = available_tools[tool_name](**tool_args)
-                    self.messages.append({
-                        "tool_call_id": tool_call.id,
-                        "role": "tool",
-                        "name": tool_name,
-                        "content": tool_response,
-                    })
+                    self.messages.append(
+                        {
+                            "tool_call_id": tool_call.id,
+                            "role": "tool",
+                            "name": tool_name,
+                            "content": tool_response,
+                        }
+                    )
             return self.get_response()
         print(f"{self.name} message 紀錄:")
         print(self.messages)
 
         return response.choices[0].message.content
 
+
 class SupervisorAgent(Agent):
-    def __init__(self, name="Supervisor", model=DEFAULT_MODEL, temperature=DEFAULT_TEMPERATURE, system_prompt="", agents: list[Agent]=[]):
-        super().__init__(name=name, model=model, temperature=temperature, system_prompt=system_prompt)
+    def __init__(
+        self,
+        name="Supervisor",
+        model=DEFAULT_MODEL,
+        temperature=DEFAULT_TEMPERATURE,
+        system_prompt="",
+        agents: list[Agent] = [],
+    ):
+        super().__init__(
+            name=name, model=model, temperature=temperature, system_prompt=system_prompt
+        )
         self.agents = agents
         # 加入 sub agent 的 name 和 description 到 system prompt
         self.system_prompt = f"""{system_prompt}
@@ -71,7 +93,11 @@ class SupervisorAgent(Agent):
 你有以下的 Agent 可以選擇，一次只能選擇一個 Agent，不能選擇多個：
 {', '.join([f"{agent.name} (負責: {agent.system_prompt})" for agent in agents])}
 """
-        self.messages = [{"role": "system", "content": self.system_prompt}] if self.system_prompt else []
+        self.messages = (
+            [{"role": "system", "content": self.system_prompt}]
+            if self.system_prompt
+            else []
+        )
 
     # 根據使用者的問題，選擇適合的 Agent 來回答
     def _select_agent(self) -> Agent | str:
@@ -86,7 +112,8 @@ class SupervisorAgent(Agent):
                             "agent_name": {
                                 "type": "string",
                                 "description": f"選擇的 Agent 名稱，一次只能選擇一個，你可以選擇 {[agent.name for agent in self.agents]}，若不需要使用任何 Agent，請回答 '不需要代理'。e.g. '{{'agent_name': 'XXXAgent'}}'",
-                                "enum": [agent.name for agent in self.agents] + ["不需要代理"],
+                                "enum": [agent.name for agent in self.agents]
+                                + ["不需要代理"],
                             },
                         },
                         "required": ["agent_name"],
@@ -113,10 +140,13 @@ class SupervisorAgent(Agent):
         print(f"選擇的 Agent 是: {selected_agent.name}")
         # 把使用者的問題傳給選擇的 Agent
         user_message = self.messages[-1]
-        
+
         # check if the answer is good enough
         # if not good enough, select another agent
-        self.add_message("developer", "判斷是否需要使用代理來回答使用者，若需要，請選擇**一個**適合的代理來回答。若不需要則直接回覆")
+        self.add_message(
+            "developer",
+            "判斷是否需要使用代理來回答使用者，若需要，請選擇**一個**適合的代理來回答。若不需要則直接回覆",
+        )
         while True:
             if selected_agent == "不需要代理" or isinstance(selected_agent, str):
                 return self.get_response()
@@ -124,7 +154,10 @@ class SupervisorAgent(Agent):
             answer = selected_agent.get_response()
             print(f"{selected_agent.name} 回答:{answer}")
             self.add_message("assistant", f"{selected_agent.name} 回答:{answer}")
-            self.add_message("user", f"請評目前所需資訊是否足夠，若不夠的話請回答 '否';如果足夠，請回答 '是'。")
+            self.add_message(
+                "user",
+                f"請評目前所需資訊是否足夠，若不夠的話請回答 '否';如果足夠，請回答 '是'。",
+            )
             evaluation = self.get_response(
                 response_format={
                     "type": "json_schema",
