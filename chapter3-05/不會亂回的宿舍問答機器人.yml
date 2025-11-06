@@ -1,0 +1,316 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 不會亂回的宿舍問答機器人
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.2.6@e2665624a156f52160927bceac9e169bd7e5ae6b936ae82575e14c90af390e6e
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      selected: false
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1762245572700-source-llm-target
+      selected: false
+      source: '1762245572700'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: question-classifier
+      id: 1762245566283-source-1762247399143-target
+      source: '1762245566283'
+      sourceHandle: source
+      target: '1762247399143'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: 1762247399143-2-1762245572700-target
+      selected: false
+      source: '1762247399143'
+      sourceHandle: '2'
+      target: '1762245572700'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: answer
+      id: 1762247399143-1-17622474361720-target
+      source: '1762247399143'
+      sourceHandle: '1'
+      target: '17622474361720'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 54
+      id: '1762245566283'
+      position:
+        x: 25.552416518443692
+        y: 252.5
+      positionAbsolute:
+        x: 25.552416518443692
+        y: 252.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1762245572700'
+          - result
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4.1-mini
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: f3c4ca90-2db2-4a1e-832c-9f1839a5eb2d
+          role: system
+          text: '你是一個會用繁體中文回答成大東寧宿舍問題的機器人，請你根據檢索到的上下文來回答問題
+
+            <context>
+
+            {{#context#}}
+
+            </context>'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: llm
+      position:
+        x: 303.3532728571789
+        y: 444.11152846490216
+      positionAbsolute:
+        x: 303.3532728571789
+        y: 444.11152846490216
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回覆
+        type: answer
+        variables: []
+      height: 104
+      id: answer
+      position:
+        x: 572.6571096300986
+        y: 444.11152846490216
+      positionAbsolute:
+        x: 572.6571096300986
+        y: 444.11152846490216
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - zyzMJz9nxerXsYMZmQ7gZfcIZA5tL94zbKrYbDvOT0nZhUB+97TsT3RNZLESOiUb
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: weighted_score
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_model_name: text-embedding-3-large
+              embedding_provider_name: langgenius/openai/openai
+              vector_weight: 0.7
+        query_variable_selector:
+        - '1762245566283'
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 知識檢索
+        type: knowledge-retrieval
+      height: 92
+      id: '1762245572700'
+      position:
+        x: 25.552416518443692
+        y: 444.11152846490216
+      positionAbsolute:
+        x: 25.552416518443692
+        y: 444.11152846490216
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        classes:
+        - id: '1'
+          name: 與東寧宿舍無關的問題
+        - id: '2'
+          name: 與成大東寧宿舍相關的問題
+        desc: ''
+        instruction: 只要使用者提到東寧宿舍，或者任何宿舍相關的內容（包含普查、訪客、）就算在「與東寧宿舍相關的問題」。避免使用者問超出範圍的問題
+        instructions: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4.1-mini
+          provider: langgenius/openai/openai
+        query_variable_selector:
+        - '1762245566283'
+        - sys.query
+        selected: false
+        title: 問題分類器
+        topics: []
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 172
+      id: '1762247399143'
+      position:
+        x: 303.3532728571789
+        y: 252.5
+      positionAbsolute:
+        x: 303.3532728571789
+        y: 252.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 我是東寧宿舍住宿公約查詢機器人，我只會這個不要問我別的問題啦🥹
+        desc: ''
+        selected: false
+        title: 請使用者問東寧相關問題
+        type: answer
+        variables: []
+      height: 118
+      id: '17622474361720'
+      position:
+        x: 572.6571096300986
+        y: 252.5
+      positionAbsolute:
+        x: 572.6571096300986
+        y: 252.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 291.2743122959211
+      y: 101.61077722807823
+      zoom: 0.8

@@ -1,0 +1,412 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 升級版水果查詢機器人
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.2.6@e2665624a156f52160927bceac9e169bd7e5ae6b936ae82575e14c90af390e6e
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: parameter-extractor
+      id: 1762354251210-source-1762354404457-target
+      source: '1762354251210'
+      sourceHandle: source
+      target: '1762354404457'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: iteration
+        targetType: answer
+      id: 1762358013316-source-answer-target
+      source: '1762358013316'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1762358013316'
+        sourceType: iteration-start
+        targetType: llm
+      id: 1762358013316start-source-1762358097164-target
+      source: 1762358013316start
+      sourceHandle: source
+      target: '1762358097164'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: parameter-extractor
+        targetType: if-else
+      id: 1762354404457-source-1762358894218-target
+      source: '1762354404457'
+      sourceHandle: source
+      target: '1762358894218'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: iteration
+      id: 1762358894218-true-1762358013316-target
+      source: '1762358894218'
+      sourceHandle: 'true'
+      target: '1762358013316'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1762358894218-false-1762358907650-target
+      source: '1762358894218'
+      sourceHandle: 'false'
+      target: '1762358907650'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1762358013316'
+        sourceType: llm
+        targetType: template-transform
+      id: 1762358097164-source-1762363692591-target
+      source: '1762358097164'
+      sourceHandle: source
+      target: '1762363692591'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 54
+      id: '1762354251210'
+      position:
+        x: 71.85892008528273
+        y: 305
+      positionAbsolute:
+        x: 71.85892008528273
+        y: 305
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1762358013316.output#}}'
+        desc: ''
+        selected: false
+        title: 直接回覆
+        type: answer
+        variables: []
+      height: 105
+      id: answer
+      position:
+        x: 1449.4537395339162
+        y: 305
+      positionAbsolute:
+        x: 1449.4537395339162
+        y: 305
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        instruction: 找出句子中出現過的水果
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4.1-mini
+          provider: langgenius/openai/openai
+        parameters:
+        - description: '水果的名稱陣列
+
+            '
+          name: fruit
+          required: false
+          type: array[string]
+        query:
+        - sys
+        - query
+        reasoning_mode: function_call
+        selected: false
+        title: 參數提取器
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1762354404457'
+      position:
+        x: 354.5622765331213
+        y: 305
+      positionAbsolute:
+        x: 354.5622765331213
+        y: 305
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 171
+        is_parallel: false
+        iterator_input_type: array[string]
+        iterator_selector:
+        - '1762354404457'
+        - fruit
+        output_selector:
+        - '1762363692591'
+        - output
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1762358013316start
+        title: 迭代
+        type: iteration
+        width: 768
+      height: 171
+      id: '1762358013316'
+      position:
+        x: 918.6292416141316
+        y: 245.27595100306593
+      positionAbsolute:
+        x: 918.6292416141316
+        y: 245.27595100306593
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 768
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1762358013316start
+      parentId: '1762358013316'
+      position:
+        x: 60
+        y: 81
+      positionAbsolute:
+        x: 978.6292416141316
+        y: 326.2759510030659
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1762358013316'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4.1-mini
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 8bbdc3e7-e9a1-47dd-8d59-2a4afa839feb
+          role: system
+          text: '你是一個水果介紹的大師，容易用短短一句話就介紹一個水果，使用繁體中文回答問題
+
+
+            這是你要介紹的水果：{{#1762358013316.item#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1762358097164'
+      parentId: '1762358013316'
+      position:
+        x: 204
+        y: 60
+      positionAbsolute:
+        x: 1122.6292416141316
+        y: 305.2759510030659
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: eaf2256b-8952-480e-96e3-8486237c1413
+            value: ''
+            varType: array[string]
+            variable_selector:
+            - '1762354404457'
+            - fruit
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 條件分支
+        type: if-else
+      height: 126
+      id: '1762358894218'
+      position:
+        x: 638.7343670190401
+        y: 305
+      positionAbsolute:
+        x: 638.7343670190401
+        y: 305
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 你沒有跟我講到任何水果，所以我也不跟你多說了😚
+        desc: ''
+        selected: false
+        title: 直接回覆 (沒有水果)
+        type: answer
+        variables: []
+      height: 118
+      id: '1762358907650'
+      position:
+        x: 918.6292416141316
+        y: 443.0053717253701
+      positionAbsolute:
+        x: 918.6292416141316
+        y: 443.0053717253701
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1762358013316'
+        selected: false
+        template: '水果：{{ fruit }}
+
+          介紹：{{ summary }}
+
+          '
+        title: 模板轉換
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1762358013316'
+          - item
+          value_type: string
+          variable: fruit
+        - value_selector:
+          - '1762358097164'
+          - text
+          value_type: string
+          variable: summary
+      height: 54
+      id: '1762363692591'
+      parentId: '1762358013316'
+      position:
+        x: 508
+        y: 60
+      positionAbsolute:
+        x: 1426.6292416141316
+        y: 305.2759510030659
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    viewport:
+      x: 133.75960368136487
+      y: 153.38287619052264
+      zoom: 0.8509470882778275

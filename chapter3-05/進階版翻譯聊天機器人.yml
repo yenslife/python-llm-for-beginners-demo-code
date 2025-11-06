@@ -1,0 +1,256 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 進階版翻譯聊天機器人
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.2.6@e2665624a156f52160927bceac9e169bd7e5ae6b936ae82575e14c90af390e6e
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables:
+  - description: ''
+    id: c45a90d2-1a28-4a64-ab79-2f96ea9c5717
+    name: conv
+    selector:
+    - conversation
+    - conv
+    value: ''
+    value_type: string
+  environment_variables:
+  - description: ''
+    id: 2535e6e1-53eb-485c-ac2c-03e302f7b433
+    name: apikey
+    selector:
+    - env
+    - apikey
+    value: xx
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1762137375573-source-1762137378570-target
+      source: '1762137375573'
+      sourceHandle: source
+      target: '1762137378570'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1762137378570-source-llm-target
+      source: '1762137378570'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - label: language
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: language
+      height: 90
+      id: '1762137375573'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4.1-mini
+          provider: langgenius/openai/openai
+        prompt_config:
+          jinja2_variables: []
+        prompt_template:
+        - id: 0d40862b-f1e5-4696-a71c-f09c01bf65ac
+          role: system
+          text: 你是一個專門將輸入翻譯成特定語言的機器人
+        - edition_type: basic
+          id: 4dc11156-d343-4de0-b4ea-d7fb51e9831f
+          jinja2_text: /
+          role: user
+          text: '將以下文字翻譯成 {{#1762137375573.language#}}
+
+            文字內容：{{#1762137378570.text#}}'
+        selected: false
+        structured_output_enabled: false
+        title: 翻譯 LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: llm
+      position:
+        x: 88.41546646601557
+        y: 397.8562431357717
+      positionAbsolute:
+        x: 88.41546646601557
+        y: 397.8562431357717
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '翻譯前的內容: {{#1762137378570.text#}}
+
+
+          翻譯後的內容: {{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回覆
+        type: answer
+        variables: []
+      height: 123
+      id: answer
+      position:
+        x: 380
+        y: 383.5023723047911
+      positionAbsolute:
+        x: 380
+        y: 383.5023723047911
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            frequency_penalty: 0.1
+            presence_penalty: 0.1
+            temperature: 0.8
+            top_p: 0.9
+          mode: chat
+          name: gpt-4.1-mini
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 4bed599d-ce6b-469d-8274-dfb695376cfc
+          role: system
+          text: 你總是會用搞笑的方式回覆使用者，並且加入大量的表情符號
+        selected: false
+        title: 搞笑的 LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1762137378570'
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -138.56336839765487
+      y: -146.66953595653206
+      zoom: 1.1823971482024997
