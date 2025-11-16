@@ -1,0 +1,11 @@
+[project]
+name = "chapter4-01"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "firecrawl-py>=4.6.0",
+    "python-dotenv>=1.2.1",
+    "rich>=14.2.0",
+]

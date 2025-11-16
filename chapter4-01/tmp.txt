@@ -1,0 +1,108 @@
+Document(
+    markdown='*   [Mac](https://yenslife.top/tags/Mac)\n    \n*   [sudo](https://yenslife.top/tags/sudo)\n    \n*   [指紋](https://yenslife.top/tags/%E6%8C%87%E7%B4%8B)\n    \n\n在 MacOS 中如果意外把 /etc/pam.d/sudo 
+的東西改壞怎麼辦？(在 MacOS 中使用指紋來驗證 sudo)\n===============================================================\n\n[海狸大師](https://github.com/yenslife)\n\n[Mac](https://yenslife.top/categories/Mac/)\n\n2025-08-14 
+00:11:33\n\n(為體驗最佳閱讀體驗，建議將 AdBlock 
+關閉，有些圖片可能會被擋掉)\n\n[](https://yenslife.top/2025/08/14/macos-sudo-pam-fix/#%E5%9C%A8-MacOS-%E4%B8%AD%E5%A6%82%E6%9E%9C%E6%84%8F%E5%A4%96%E6%8A%8A-x2F-etc-x2F-pam-d-x2F-sudo-%E7%9A%84%E6%9D%B1%E8%A5%BF%E6%94%B9%E5%A3%9E%
+E6%80%8E%E9%BA%BC%E8%BE%A6%EF%BC%9F "在 MacOS 中如果意外把 /etc/pam.d/sudo 的東西改壞怎麼辦？")\n在 MacOS 中如果意外把 /etc/pam.d/sudo 
+的東西改壞怎麼辦？\n==================================================================================================================================================================================================================
+=============================================================================================================\n\n[](https://yenslife.top/2025/08/14/macos-sudo-pam-fix/#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81 
+"前情提要")\n前情提要\n--------------------------------------------------------------------------------------------------------\n\n我一開始是因為看到這個影片，作者 Chuck 提到的最後一個 MacOS terminal trick\n\n他說可以透過修改 
+`/etc/pam.d/sudo`，加入 `auth sufficent pam_tid.so` 來讓之後需要輸入 sudo 的地方都可以使用指紋來驗證，超帥超快的，特別是如果你的密碼很長，應該會輸入到很躁\n\n    cat /etc/pam.d/sudo\n    # sudo: auth account password session\n    
+auth sufficient     pam_tid.so\n    auth       include        sudo_local\n    auth       sufficient     pam_smartcard.so\n    auth       required       pam_opendirectory.so\n    account    required       pam_permit.so\n    
+password   required       pam_deny.so\n    session    required       pam_permit.so\n    \n\n但好笑的是，我不小心把 `pam_tid.so` 寫成 `pam_unix.so` (有時候用 GitHub copilot 還是要注意呀QQ)\n\n導致我存檔離開並打算用 `sudo` 
+的時候，出現 `sudo: unable to initialize PAM: No such file or directory`，意思就是 pam 設定檔錯誤，然後想要改這個檔案又需要 sudo 
+的權限，所以哈哈，尷尬了，悲劇了，完蛋了\n\n[](https://yenslife.top/2025/08/14/macos-sudo-pam-fix/#%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95 
+"解決方法")\n解決方法\n--------------------------------------------------------------------------------------------------------\n\n跟 Perplextiy 聊過之後，才知道這種系統層級的東西壞掉，在 MacOS 
+上可以透過「恢復模式」來修，在這個模式下的終端機預設就是 super user，所以只要用這個模式把 `/etc/pam.d/sudo` 改好就好了！\n\n以下是步驟\n\n1.  關機\n2.  按住電源鍵不放，直到出現「繼續按住來進入選項」\n3.  
+這時候你可以選擇你的磁碟和選項，當然是要選擇「選項」，然後按下繼續\n\nPerplexity 跟我說可以用「磁碟工具程式」來選取掛載 `/etc` 的磁碟，然後進入終端機用 vi 去改。我後來發現其實不用這樣，這一步應該只是要確定這個 Volume 
+的名字而已，我最後是用以下命令來改\n\n至於進入終端機的方式，你可以看到螢幕最上方繪有一條 menu bar，那邊有一個地方可以開啟終端機\n\n    $ vi /Volumes/Macintosh\\ HD/etc/pam.d/sudo\n    \n\n改好存檔之後，重新開機就可以用指紋來驗證 
+sudo 啦！！超酷的\n\n[![系統要求使用指紋來驗證 sudo 的截圖](https://i.meee.com.tw/CzGJ70z.png)](https://i.meee.com.tw/CzGJ70z.png "系統要求使用指紋來驗證 sudo 的截圖")\n\nRelated 
+[Issues](https://github.com/yenslife/yenslife.github.io/issues)\n not found\n\nPlease contact @yenslife to initialize the comment\n\nLogin with GitHub\n\n[下一篇\\\n\\\nMacbook pro (Intel 
+晶片)雙系統測試紀錄](https://yenslife.top/2023/12/20/MacBook-Pro-Intel-Chip-Dual-System-Testing-Record/)',
+    html='<!DOCTYPE html><html>\n\n\t<body>\n\t\t\n\t\n\t\n<div class="shelter">\n</div>\n\n\n\n\n<div class="post">\n    <div class="post-header-background post-header-color" style="background: url(\'\')">\n    <div 
+class="post-header-background-content">\n        <ul class="post-header-tag">\n            \n            \n            <li><a href="https://yenslife.top/tags/Mac">Mac</a></li>\n            \n            <li><a 
+href="https://yenslife.top/tags/sudo">sudo</a></li>\n            \n            <li><a href="https://yenslife.top/tags/%E6%8C%87%E7%B4%8B">指紋</a></li>\n            \n            \n        </ul>\n        \n        <h1>在 MacOS 
+中如果意外把 /etc/pam.d/sudo 的東西改壞怎麼辦？(在 MacOS 中使用指紋來驗證 sudo)</h1>\n        <div class="post-header-info">\n            <div class="post-header-info-author">\n                \n                    <svg 
+xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">\n                        <g>\n                            <path fill="#12183A" d="M6.187 15.265A6.47 6.47 0 0 0 10 16.5a6.47 6.47 0 0 0 
+3.813-1.235A4.99 4.99 0 0 0 10 13.5a4.99 4.99 0 0 0-3.813 1.765zM5.082 14.25A6.485 6.485 0 0 1 10 12c1.965 0 3.726.872 4.918 2.25a6.5 6.5 0 1 0-9.836 0zM10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 
+6zm0-1.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z">\n                            </path>\n                        </g>\n                    </svg>\n                \n                <span class="post-header-info-author-text"> <a 
+target="_blank" rel="noopener" href="https://github.com/yenslife">海狸大師</a></span>\n                <div class="post-header-info-author-categories">\n                    \n                         <a 
+href="https://yenslife.top/categories/Mac/">Mac</a>\n                    \n                </div>\n                <p>2025-08-14 00:11:33</p>\n            </div>\n        </div>\n    </div>\n</div>\n    <div class="post-content 
+content-move" id="content">\n  <div id="article" class="post-content-info">\n    \n      <div style="text-align: center">\n  <p style="font-size:90%;">(為體驗最佳閱讀體驗，建議將 AdBlock 
+關閉，有些圖片可能會被擋掉)</p>\n</div>\n\n<h1 id="在-MacOS-中如果意外把-x2F-etc-x2F-pam-d-x2F-sudo-的東西改壞怎麼辦？"><a 
+href="https://yenslife.top/2025/08/14/macos-sudo-pam-fix/#%E5%9C%A8-MacOS-%E4%B8%AD%E5%A6%82%E6%9E%9C%E6%84%8F%E5%A4%96%E6%8A%8A-x2F-etc-x2F-pam-d-x2F-sudo-%E7%9A%84%E6%9D%B1%E8%A5%BF%E6%94%B9%E5%A3%9E%E6%80%8E%E9%BA%BC%E8%BE%A6%E
+F%BC%9F" class="headerlink" title="在 MacOS 中如果意外把 /etc/pam.d/sudo 的東西改壞怎麼辦？"></a>在 MacOS 中如果意外把 /etc/pam.d/sudo 的東西改壞怎麼辦？</h1><h2 id="前情提要"><a 
+href="https://yenslife.top/2025/08/14/macos-sudo-pam-fix/#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81" class="headerlink" title="前情提要"></a>前情提要</h2><p>我一開始是因為看到這個影片，作者 Chuck 提到的最後一個 MacOS terminal 
+trick</p>\n<iframe width="560" height="315" src="https://www.youtube.com/embed/qOrlYzqXPa8?si=JKLwHGNJ3bNuOuvU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>\n\n<p>他說可以透過修改 <code>/etc/pam.d/sudo</code>，加入 <code>auth sufficent pam_tid.so</code> 
+來讓之後需要輸入 sudo 的地方都可以使用指紋來驗證，超帥超快的，特別是如果你的密碼很長，應該會輸入到很躁</p>\n<pre><code class="bash hljs language-bash"><span class="hljs-built_in">cat</span> /etc/pam.d/sudo\n<span 
+class="hljs-comment"># sudo: auth account password session</span>\nauth sufficient     pam_tid.so\nauth       include        sudo_local\nauth       sufficient     pam_smartcard.so\nauth       required       
+pam_opendirectory.so\naccount    required       pam_permit.so\npassword   required       pam_deny.so\nsession    required       pam_permit.so\n</code></pre>\n<p>但好笑的是，我不小心把 <code>pam_tid.so</code> 寫成 
+<code>pam_unix.so</code> (有時候用 GitHub copilot 還是要注意呀QQ)</p>\n<p>導致我存檔離開並打算用 <code>sudo</code> 的時候，出現 <code>sudo: unable to initialize PAM: No such file or directory</code>，意思就是 pam 
+設定檔錯誤，然後想要改這個檔案又需要 sudo 的權限，所以哈哈，尷尬了，悲劇了，完蛋了</p>\n<h2 id="解決方法"><a href="https://yenslife.top/2025/08/14/macos-sudo-pam-fix/#%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95" class="headerlink" 
+title="解決方法"></a>解決方法</h2><p>跟 Perplextiy 聊過之後，才知道這種系統層級的東西壞掉，在 MacOS 上可以透過「恢復模式」來修，在這個模式下的終端機預設就是 super user，所以只要用這個模式把 <code>/etc/pam.d/sudo</code> 
+改好就好了！</p>\n<p>以下是步驟</p>\n<ol>\n<li>關機</li>\n<li>按住電源鍵不放，直到出現「繼續按住來進入選項」</li>\n<li>這時候你可以選擇你的磁碟和選項，當然是要選擇「選項」，然後按下繼續</li>\n</ol>\n<p>Perplexity 
+跟我說可以用「磁碟工具程式」來選取掛載 <code>/etc</code> 的磁碟，然後進入終端機用 vi 去改。我後來發現其實不用這樣，這一步應該只是要確定這個 Volume 
+的名字而已，我最後是用以下命令來改</p>\n<p>至於進入終端機的方式，你可以看到螢幕最上方繪有一條 menu bar，那邊有一個地方可以開啟終端機</p>\n<pre><code class="bash hljs language-bash">$ vi /Volumes/Macintosh\\ 
+HD/etc/pam.d/sudo\n</code></pre>\n<p>改好存檔之後，重新開機就可以用指紋來驗證 sudo 啦！！超酷的</p>\n<p><a href="https://i.meee.com.tw/CzGJ70z.png" title="系統要求使用指紋來驗證 sudo 的截圖" 
+data-src="https://i.meee.com.tw/CzGJ70z.png" class="fancybox" data-fancybox="fancybox-gallery-img" rel="article"><img src="https://i.meee.com.tw/CzGJ70z.png" alt="系統要求使用指紋來驗證 sudo 的截圖"></a></p>\n\n  </div>\n  <div 
+id="gitalk-container"><div class="gt-container"><div class="gt-no-init"><p>Related <a href="https://github.com/yenslife/yenslife.github.io/issues">Issues</a> not found</p><p>Please contact @yenslife to initialize the 
+comment</p><button class="gt-btn gt-btn-login"><span class="gt-btn-text">Login with GitHub</span></button></div></div></div>\n</div>\n\n\n\n\n    <div class="post-paging">\n    \n\n    \n    <a 
+href="https://yenslife.top/2023/12/20/MacBook-Pro-Intel-Chip-Dual-System-Testing-Record/">\n        <div class="post-paging-next">\n            <span>下一篇</span>\n            <p>Macbook pro (Intel 晶片)雙系統測試紀錄</p>\n      
+</div>\n    </a>\n    \n</div>\n</div>\n\t\t\n\n\n\n\n\n<div class="goTop" id="js-go_top" style="transform: translate(100px, 0px); transition: transform 0.5s ease-in-out;">\n    <span>\n        <svg 
+xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">\n            <g>\n                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>\n            </g>\n        </svg>\n    </span>\n</div>\n\n\n\n    <!-- 
+Gitalk -->\n    \n\n\n\t\n\n\n\n</body></html>',
+    raw_html=None,
+    json=None,
+    summary=None,
+    metadata=DocumentMetadata(
+        title='在 MacOS 中如果意外把 /etc/pam.d/sudo 的東西改壞怎麼辦？(在 MacOS 中使用指紋來驗證 sudo)-記錄、學習、生活',
+        description='在 MacOS 中如果意外把 /etc/pam.d/sudo 的東西改壞怎麼辦？(在 MacOS 中使用指紋來驗證 sudo 遇到的問題)',
+        url='https://yenslife.top/2025/08/14/macos-sudo-pam-fix/',
+        language=None,
+        keywords='Mac,sudo,指紋,',
+        robots=None,
+        og_title=None,
+        og_description=None,
+        og_url=None,
+        og_image=None,
+        og_audio=None,
+        og_determiner=None,
+        og_locale=None,
+        og_locale_alternate=None,
+        og_site_name=None,
+        og_video=None,
+        favicon='https://yenslife.top/image/yenslife-profile-pic.png',
+        dc_terms_created=None,
+        dc_date_created=None,
+        dc_date=None,
+        dc_terms_type=None,
+        dc_type=None,
+        dc_terms_audience=None,
+        dc_terms_subject=None,
+        dc_subject=None,
+        dc_description=None,
+        dc_terms_keywords=None,
+        modified_time=None,
+        published_time=None,
+        article_tag=None,
+        article_section=None,
+        source_url='https://yenslife.top/2025/08/14/macos-sudo-pam-fix/',
+        status_code=200,
+        scrape_id='3d11897d-9eb4-4a25-b814-150fce449c2e',
+        num_pages=None,
+        content_type='text/html; charset=utf-8',
+        proxy_used='basic',
+        cache_state=None,
+        cached_at=None,
+        credits_used=1,
+        error=None
+    ),
+    links=None,
+    images=None,
+    screenshot=None,
+    actions=None,
+    warning=None,
+    change_tracking=None,
+    branding=None
+)
