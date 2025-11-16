@@ -1,0 +1,17 @@
+[project]
+name = "chapter4-02"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "openai>=2.8.0",
+    "python-dotenv>=1.2.1",
+    "rich>=14.2.0",
+    "textual>=6.6.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.11.0",
+]
