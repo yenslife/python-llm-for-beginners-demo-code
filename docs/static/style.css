@@ -492,6 +492,7 @@ footer a:hover {
 
   .desktop-header {
     padding: 8px;
+    margin-top: 4px;
   }
 
   .header-content {
@@ -556,6 +557,10 @@ footer a:hover {
     /* 放慢速度 */
     padding-left: 0;
     /* 移除 padding */
+  }
+  
+  .marquee-content h3 {
+    margin-bottom: 2px;
   }
 
   /* 首頁的跑馬燈只跑一次，然後變成靜態顯示 */
