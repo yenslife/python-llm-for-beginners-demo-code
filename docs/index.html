@@ -27,8 +27,9 @@
           <li><a href="intro.html">介紹</a></li>
           <li><a href="corrections.html">書籍勘誤</a></li>
           <li><a href="buy.html">購買連結</a></li>
-          <li><a href="#" onclick="window.open('https://github.com/yenslife/python-llm-for-beginners-demo-code', '_blank')">程式碼</a></li>
-          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#"
+              onclick="window.open('https://github.com/yenslife/python-llm-for-beginners-demo-code', '_blank')">程式碼</a>
+          </li>
         </ul>
       </div>
     </aside>
@@ -38,7 +39,9 @@
       <div class="home-title-container">
         <div class="marquee-container">
           <div class="marquee-content">
-            <h1 style="font-size: 3rem; text-align: center;" onclick="window.location.href='intro.html'" title="Click to read Intro">會 Python 就可以玩生成式 AI 應用？從原理出發 x Python + No-Code 串接 LLM 的 n 個實作，小白也能輕鬆上手！ (iThome鐵人賽系列書)</h1>
+            <h1 style="font-size: 3rem; text-align: center;" onclick="window.location.href='intro.html'"
+              title="Click to read Intro">會 Python 就可以玩生成式 AI 應用？從原理出發 x Python + No-Code 串接 LLM 的 n 個實作，小白也能輕鬆上手！
+              (iThome鐵人賽系列書)</h1>
           </div>
         </div>
       </div>
@@ -57,16 +60,16 @@
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const hamburgerBtn = document.getElementById('hamburgerBtn');
-      
+
       sidebar.classList.toggle('active');
       hamburgerBtn.classList.toggle('active');
     }
-    
+
     // 點擊側邊欄外部關閉側邊欄
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
       const sidebar = document.getElementById('sidebar');
       const hamburgerBtn = document.getElementById('hamburgerBtn');
-      
+
       if (!sidebar.contains(event.target) && !hamburgerBtn.contains(event.target)) {
         sidebar.classList.remove('active');
         hamburgerBtn.classList.remove('active');
@@ -74,10 +77,10 @@
     });
 
     // 監聽首頁跑馬燈結束事件
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const marqueeContent = document.querySelector('.home-title-container .marquee-content');
       if (marqueeContent) {
-        marqueeContent.addEventListener('animationend', function() {
+        marqueeContent.addEventListener('animationend', function () {
           console.log('Marquee finished!');
           this.classList.add('finished');
         });
