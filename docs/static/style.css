@@ -543,7 +543,7 @@ footer a:hover {
   /* 手機版啟用跑馬燈 */
   .marquee-container {
     overflow: hidden;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
     width: 100%;
     background-color: var(--primary-color);
     /* 確保背景色 */
