@@ -252,6 +252,34 @@ main {
   /* 確保寬度 */
 }
 
+/* 指向手指動畫 */
+.home-title-container {
+  position: relative;
+}
+
+.pointing-hand {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1000;
+  animation: handWave 2s ease-in-out infinite;
+}
+
+.cursor-img {
+  width: 52px;
+  height: 52px;
+  transform: rotate(-15deg);
+}
+
+@keyframes handWave {
+  0%, 100% {
+    transform: rotate(-15deg) translateY(-3px);
+  }
+  50% {
+    transform: rotate(-5deg) translateY(3px);
+  }
+}
+
 /* 頁尾樣式 */
 footer {
   grid-area: footer;
