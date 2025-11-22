@@ -266,15 +266,18 @@ main {
 }
 
 .cursor-img {
-  width: 52px;
-  height: 52px;
+  width: 32px;
+  height: 32px;
   transform: rotate(-15deg);
 }
 
 @keyframes handWave {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: rotate(-15deg) translateY(-3px);
   }
+
   50% {
     transform: rotate(-5deg) translateY(3px);
   }
