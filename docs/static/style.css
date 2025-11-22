@@ -493,6 +493,10 @@ footer a:hover {
     white-space: nowrap;
   }
 
+  footer p {
+    font-size: 14px;
+  }
+
   /* 手機版啟用跑馬燈 */
   .marquee-container {
     overflow: hidden;
