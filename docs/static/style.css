@@ -211,7 +211,10 @@ main {
   grid-area: main;
   max-width: 100%;
   background-color: var(--white);
-  padding: 2rem;
+  padding-left: 16rem;
+  padding-right: 16rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
 }
