@@ -252,6 +252,15 @@ main {
   /* 確保寬度 */
 }
 
+/* 為 NES container 之間增加間距 */
+.main-container .nes-container.is-rounded {
+  margin-bottom: 20px;
+}
+
+.main-container .nes-container.is-rounded:last-child {
+  margin-bottom: 0;
+}
+
 /* 指向手指動畫 */
 .home-title-container {
   position: relative;
