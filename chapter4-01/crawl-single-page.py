@@ -4,7 +4,7 @@ from rich import print
 app = FirecrawlApp(api_url="http://localhost:3002/v2", api_key="a")
 
 doc = app.scrape(
-    "https://yenslife.top/2025/08/14/macos-sudo-pam-fix/",
+    "https://yenslife.top/2025/08/14/macos-sudo-pam-fix/", # 替換 URL
     formats=["markdown", "html"],
 )
 print(doc)
