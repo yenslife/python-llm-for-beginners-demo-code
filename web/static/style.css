@@ -1,0 +1,596 @@
+@font-face {
+  font-family: 'Cubic-11';
+  src: url('./fonts/Cubic_11.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --primary-color: #4a90e2;
+  --secondary-color: #f0f0f0;
+  --text-color: #333;
+  --white: #ffffff;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+}
+
+html,
+body {
+  font-family: 'Cubic-11', sans-serif;
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 整體佈局 (預設為內頁樣式) */
+.layout {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  gap: 20px;
+  padding: 0 20px 20px;
+  position: relative;
+}
+
+/* 首頁特殊布局 - 只顯示漢堡和主內容 */
+.layout.home-page {
+  grid-template-areas:
+    "hamburger . ."
+    ". main ."
+    "footer footer footer";
+  grid-template-columns: 60px 1fr 60px;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  /* 垂直置中 */
+}
+
+/* 首頁的主內容區塊置中 */
+.layout.home-page main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.home-title-container {
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+}
+
+.home-title-container h1 {
+  cursor: url('https://unpkg.com/nes.css/assets/cursor-click.png'), pointer !important;
+}
+
+/* 頁首樣式 */
+header {
+  grid-area: header;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 10px;
+  /* 減少 padding */
+  /* 像素風格的邊框 */
+  border: 4px solid #000;
+  /* 移除圓角以符合像素風格 */
+  border-radius: 0;
+  /* 更像素化的陰影效果 */
+  box-shadow: 8px 8px 0 0 #212529;
+  image-rendering: pixelated;
+  /* 固定在最上方 */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+header h1 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  line-height: 1.3;
+  text-shadow: 2px 2px 0 #212529;
+  padding: 4px;
+  image-rendering: pixelated;
+  white-space: normal;
+  /* 電腦版預設換行 */
+}
+
+/* 跑馬燈容器 (電腦版不啟用) */
+.marquee-container {
+  width: 100%;
+  overflow: visible;
+  position: relative;
+  background-color: var(--primary-color);
+  margin-bottom: 0;
+}
+
+/* 跑馬燈內容 (電腦版不啟用) */
+.marquee-content {
+  display: block;
+  white-space: normal;
+  animation: none;
+  padding-left: 0;
+}
+
+/* 跑馬燈動畫 Keyframes */
+/* 跑馬燈動畫 Keyframes (移至手機版 media query 中定義) */
+
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+header .nes-btn {
+  /* NES 按鈕已有樣式，這裡只需要微調 */
+  margin: 6px;
+  min-width: 120px;
+  min-height: 80px;
+  /* center font */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 側邊欄樣式 (預設隱藏，只在 Home Page 作為滑動選單) */
+aside {
+  grid-area: auto;
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  display: none;
+  /* 預設隱藏 */
+}
+
+aside ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+aside li {
+  margin-bottom: 14px;
+  position: relative;
+  overflow: visible;
+  position: relative;
+  overflow: visible;
+}
+
+aside a {
+  display: block;
+  padding: 8px 12px;
+  color: var(--text-color);
+  text-decoration: none;
+  position: relative;
+  margin: 4px 0;
+  outline: none;
+}
+
+aside a:hover,
+aside a:focus {
+  /* 使用 NES.css 風格的像素化 hover 效果 */
+  color: #fff;
+  background-color: #209cee;
+  text-decoration: none;
+  /* NES.css 風格的像素邊框 */
+  outline: 4px solid #000;
+  box-shadow:
+    -4px -4px 0 0 #000,
+    4px -4px 0 0 #000,
+    -4px 4px 0 0 #000,
+    4px 4px 0 0 #000;
+  transform: scale(1.02);
+}
+
+/* 主要內容區域 */
+main {
+  grid-area: main;
+  max-width: 100%;
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+/* 表格樣式調整 */
+.nes-table {
+  width: 100%;
+  /* 電腦版恢復 100% 寬度，自動適應 */
+  min-height: 50px;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.nes-table th,
+.nes-table td {
+  min-width: 100px;
+  /* 電腦版不需要太寬，讓它自動換行 */
+  padding: 1rem;
+  white-space: normal;
+  /* 電腦版允許換行 */
+}
+
+/* 表格橫向捲動容器 (全域生效) */
+.nes-table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+  /* 增加底部間距 */
+}
+
+/* 勘誤頁面容器調整 */
+.main-container {
+  min-height: 60vh;
+  /* 增加高度 */
+  width: 100%;
+  /* 確保寬度 */
+}
+
+/* 頁尾樣式 */
+footer {
+  grid-area: footer;
+  background-color: var(--primary-color);
+  color: var(--white);
+  text-align: center;
+  padding: 20px;
+  /* 像素風格的邊框 */
+  border: 4px solid #000;
+  /* 移除圓角以符合像素風格 */
+  border-radius: 0;
+  /* 更像素化的陰影效果 */
+  box-shadow: 8px 8px 0 0 #212529;
+  margin-top: auto;
+  box-shadow: 8px 8px 0 0 #212529;
+  margin-top: auto;
+  /* 設定為固定在底部 */
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+footer p {
+  margin: 8px 0;
+}
+
+footer a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 2px 6px;
+  margin: 0 2px;
+  /* 移除底線，使用 NES 風格 */
+  border: 0;
+  transition: all 0.05s steps(2) 0s;
+}
+
+footer a:hover {
+  /* 像素風格的 hover 效果 */
+  background-color: rgba(255, 255, 255, 0.2);
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.2);
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  transform: scale(1.05);
+}
+
+/* 漢堡選單按鈕 */
+.hamburger-btn {
+  grid-area: hamburger;
+  display: none;
+  /* 預設隱藏，只在 Home Page 顯示 */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: #212529;
+  border: 4px solid #000;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+/* 首頁時顯示漢堡選單 (覆蓋預設隱藏) */
+.layout.home-page .hamburger-btn {
+  display: flex !important;
+  /* 強制顯示 */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  grid-area: auto;
+  /* 脫離 grid */
+}
+
+.hamburger-btn span {
+  display: block;
+  width: 20px;
+  height: 3px;
+  background-color: #fff;
+  margin: 2px 0;
+  transition: all 0.3s ease;
+  border: 1px solid #000;
+}
+
+.hamburger-btn.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-btn.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* 側邊欄樣式 */
+.sidebar {
+  grid-area: sidebar;
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  align-self: start;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1000;
+}
+
+/* 首頁時隱藏側邊欄 */
+.layout.home-page .sidebar {
+  display: none;
+}
+
+/* 桌面版頁首 */
+.desktop-header {
+  grid-area: header;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 20px;
+  border: 4px solid #000;
+  border-radius: 0;
+  box-shadow: 8px 8px 0 0 #212529;
+  image-rendering: pixelated;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-areas:
+      "header"
+      "main"
+      "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    padding: 0 10px 10px;
+    gap: 15px;
+  }
+
+  .layout.home-page {
+    grid-template-areas:
+      ". main ."
+      "footer footer";
+    grid-template-columns: 60px 1fr 60px;
+  }
+
+  .layout.home-page .sidebar {
+    display: block;
+    /* 修正：確保側邊欄在手機版是顯示的 (只是被移到畫面外) */
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    background-color: var(--white);
+    padding: 20px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transition: left 0.3s ease;
+    border-right: 4px solid #000;
+  }
+
+  .layout.home-page .sidebar.active {
+    left: 0;
+  }
+
+  /* 修正手機版跑馬燈結束後的字體大小，避免 inline style 3rem 太大導致垂直排列 */
+  .layout.home-page .home-title-container h1 {
+    font-size: 1.5rem !important;
+    /* 強制覆蓋 inline style */
+    line-height: 1.4;
+    padding: 10px;
+  }
+
+  .hamburger-btn {
+    position: relative;
+    z-index: 1001;
+  }
+
+  .layout.home-page .hamburger-btn {
+    /* display: none;  <-- 移除這行，確保首頁手機版看得到按鈕 */
+    position: fixed;
+    /* 改成 fixed，確保它永遠浮在最上面，不會被 sidebar 蓋住 */
+    top: 20px;
+    right: 20px;
+    z-index: 2001;
+    /* 確保比 sidebar (2000) 高 */
+  }
+
+  .desktop-header {
+    padding: 15px;
+  }
+
+  .header-content {
+    flex-direction: column;
+  }
+
+  .nav-buttons {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  header .nes-btn {
+    min-width: 80px;
+    min-height: 40px;
+    margin: 4px;
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  header {
+    min-width: 0;
+    width: 100%;
+  }
+
+
+  /* 手機版表格特殊設定：強制橫向捲動且不換行 */
+  .nes-table {
+    width: max-content;
+  }
+
+  .nes-table th,
+  .nes-table td {
+    min-width: 150px;
+    white-space: nowrap;
+  }
+
+  header h1 {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  /* 手機版啟用跑馬燈 */
+  .marquee-container {
+    overflow: hidden;
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: var(--primary-color);
+    /* 確保背景色 */
+  }
+
+  .marquee-content {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee 8s linear infinite;
+    /* 放慢速度 */
+    padding-left: 0;
+    /* 移除 padding */
+  }
+
+  /* 首頁的跑馬燈只跑一次，然後變成靜態顯示 */
+  .home-title-container .marquee-content {
+    animation-iteration-count: 1;
+    /* 只跑一次 */
+    animation-fill-mode: forwards;
+    /* 停在最後狀態 (雖然我們會用 JS 切換，但加著保險) */
+  }
+
+  /* 跑馬燈結束後的靜態樣式 */
+  .home-title-container .marquee-content.finished {
+    animation: none;
+    transform: none;
+    white-space: normal;
+    /* 允許換行 */
+    text-align: center;
+    display: block;
+    width: 100%;
+  }
+
+  /* 定義手機版專用的 marquee 動畫 */
+  @keyframes marquee {
+    0% {
+      transform: translateX(100vw);
+      /* 從右側外開始 */
+    }
+
+    100% {
+      transform: translateX(-100%);
+      /* 移動到左側外 */
+    }
+  }
+
+  main {
+    padding: 15px;
+  }
+
+  /* 關鍵修正：讓首頁主內容區塊允許縮小，避免被跑馬燈撐開 */
+  .layout.home-page main {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  .hamburger-btn {
+    display: none;
+  }
+
+  .layout {
+    grid-template-areas:
+      "header"
+      "main"
+      "footer";
+    grid-template-columns: 1fr;
+  }
+
+  .layout.home-page {
+    grid-template-areas:
+      ". main ."
+      "footer footer";
+    grid-template-columns: 250px 1fr 250px;
+  }
+
+  .layout.home-page .sidebar {
+    display: block;
+    /* 讓它存在但被 active 控制 */
+    position: fixed;
+    top: 0;
+    right: -300px;
+    /* 從右側滑出 */
+    left: auto;
+    height: 100vh;
+    width: 280px;
+    z-index: 2000;
+    transition: right 0.3s ease;
+    border-left: 4px solid #000;
+    border-right: none;
+  }
+
+  .layout.home-page .sidebar.active {
+    right: 0;
+  }
+}

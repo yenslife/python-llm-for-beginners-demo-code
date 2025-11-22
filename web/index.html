@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="./static/nes-core.min.css">
+  <link rel="stylesheet" href="./static/style.css">
+  <title>LLM book note</title>
+</head>
+
+<body>
+  <div class="layout home-page">
+    <!-- 漢堡選單按鈕 (只在首頁顯示) -->
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- 側邊欄 (首頁用) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="nes-container with-title">
+        <p class="title">選單</p>
+        <ul class="nes-list is-circle">
+          <li><a href="intro.html">介紹</a></li>
+          <li><a href="corrections.html">書籍勘誤</a></li>
+          <li><a href="buy.html">購買連結</a></li>
+          <li><a href="#" onclick="window.open('https://github.com/yenslife/python-llm-for-beginners-demo-code', '_blank')">程式碼</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- 主要內容區 -->
+    <main class="main-content" id="mainContent">
+      <div class="home-title-container">
+        <div class="marquee-container">
+          <div class="marquee-content">
+            <h1 style="font-size: 3rem; text-align: center;" onclick="window.location.href='intro.html'" title="Click to read Intro">會 Python 就可以玩生成式 AI 應用？從原理出發 x Python + No-Code 串接 LLM 的 n 個實作，小白也能輕鬆上手！ (iThome鐵人賽系列書)</h1>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer>
+      <div class="footer-content">
+        <p>&copy; 2025 《Python 新手 LLM 應用之旅》版權所有</p>
+        <p><a href="mailto:77geo5rge6@gmail.com">聯絡作者</a> | <a href="#">出版資訊</a></p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      
+      sidebar.classList.toggle('active');
+      hamburgerBtn.classList.toggle('active');
+    }
+    
+    // 點擊側邊欄外部關閉側邊欄
+    document.addEventListener('click', function(event) {
+      const sidebar = document.getElementById('sidebar');
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      
+      if (!sidebar.contains(event.target) && !hamburgerBtn.contains(event.target)) {
+        sidebar.classList.remove('active');
+        hamburgerBtn.classList.remove('active');
+      }
+    });
+
+    // 監聽首頁跑馬燈結束事件
+    document.addEventListener('DOMContentLoaded', function() {
+      const marqueeContent = document.querySelector('.home-title-container .marquee-content');
+      if (marqueeContent) {
+        marqueeContent.addEventListener('animationend', function() {
+          console.log('Marquee finished!');
+          this.classList.add('finished');
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>
