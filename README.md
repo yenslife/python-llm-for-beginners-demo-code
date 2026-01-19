@@ -53,7 +53,7 @@ BibTeX 格式：
   author    = {Pan, Chun-Yen},
   year      = {2026},
   publisher = {drmaster},
-  isbn      = {},
+  isbn      = {9786264144056},
   url       = {}
   note      = {Example code available at: https://github.com/yenslife/python-llm-for-beginners-demo-code}
 }
@@ -66,5 +66,7 @@ BibTeX 格式：
 一些我還沒做的，放在這邊提醒自己
 
 - [ ] 書籍 Citation 區的購買連結 url 和 isbn
+    - [x] isbn
+    - [ ] url
 - [ ] 若有注意事項，可以補充各章節的 README.md
 - [ ] 購買連結
