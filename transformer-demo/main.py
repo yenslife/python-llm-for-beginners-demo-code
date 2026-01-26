@@ -6,10 +6,10 @@ from typing import Any
 pipe = pipeline(task="text-generation", model="openai-community/gpt2", torch_dtype=torch.float16, device=-1, pad_token_id=50256)
 tokenizer: Any = pipe.tokenizer
 
-# input_text = "I love you, but"
+input_text = "I love you, but"
 # input_text = "User: What is AI?\nAssistant:"
-input_text = "Space Needle is in downtown"
-ret = pipe(input_text, max_new_tokens=1)
+# input_text = "Space Needle is in downtown"
+ret = pipe(input_text, max_new_tokens=5)
 print(ret)
 # Output the generated text
 full_generated_text = ret[0]['generated_text']
