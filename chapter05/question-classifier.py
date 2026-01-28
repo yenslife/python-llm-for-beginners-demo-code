@@ -8,7 +8,7 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # ========= Stage 1: Classification (Department) =========
-classification_system_prompt = """你將會收到一則來自成大學生或教職員的客服訊息，請將它分類成「處室」(primary) 與「次要類別」(secondary)，並以純 JSON 格式輸出，不能有多餘文字或 Markdown。
+classification_system_prompt = """你將會收到一則來自成大學生或教職員的客服訊息，請將它分類成「處室」(primary) 與「次要類別」(secondary)，並以**純 JSON 格式**輸出，不能有多餘文字或 Markdown。
 
 處室 (primary)：
 - 住宿服務組
