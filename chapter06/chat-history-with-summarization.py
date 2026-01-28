@@ -48,9 +48,9 @@ def get_chat_response(model_name: str = DEFAULT_MODEL) -> str:
     request_messages = [{"role": msg["role"], "content": msg["content"]} for msg in messages]
     response = client.chat.completions.create(
         model=model_name,
-        messages=request_messages, # type: ignore
+        messages=request_messages,
     )
-    return response.choices[0].message.content # type: ignore
+    return response.choices[0].message.content
 
 def summarize_messages(message_list: list[dict]) -> str:
     summary_prompt = "請用繁體中文總結以下對話內容，並保持重點清晰，像是關鍵字、使用者資訊、問答主題等，請務必整理在 500 字內:\n\n"
@@ -65,7 +65,7 @@ def summarize_messages(message_list: list[dict]) -> str:
             {"role": "user", "content": summary_prompt}
         ]
     )
-    return response.choices[0].message.content # type: ignore
+    return response.choices[0].message.content
 
 def add_history_to_system_prompt(history: str) -> None:
     system_content = SYSTEM_PROMPT.format(history=history)

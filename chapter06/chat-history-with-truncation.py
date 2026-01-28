@@ -37,7 +37,7 @@ def get_chat_response(model_name: str = DEFAULT_MODEL) -> str:
     request_messages = [{"role": msg["role"], "content": msg["content"]} for msg in messages]
     response = client.chat.completions.create(
         model=model_name,
-        messages=request_messages, # type: ignore
+        messages=request_messages,
     )
     return response.choices[0].message.content
 
