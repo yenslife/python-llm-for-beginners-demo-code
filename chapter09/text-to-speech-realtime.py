@@ -19,7 +19,7 @@ async def get_llm_response():
     )
     async for chunk in response:
         delta = chunk.choices[0].delta
-        print(delta.content, end="", flush=True)
+        print(delta.content, end="")
     print("\n\n安慰結束")
 
 async def main() -> None:
