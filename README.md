@@ -54,7 +54,7 @@ BibTeX 格式：
   year      = {2026},
   publisher = {drmaster},
   isbn      = {9786264144056},
-  url       = {}
+  url       = {},
   note      = {Example code available at: https://github.com/yenslife/python-llm-for-beginners-demo-code}
 }
 ```
