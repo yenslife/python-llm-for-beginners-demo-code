@@ -1,8 +1,10 @@
 # 零基礎玩轉 LLM 應用全攻略：Python × No-Code 實作 AI 開發超簡單
 
+<img src="./docs/static/book-cover.webp" width="250" alt="書籍封面">
+
 Hi 🦫！想必你是看了這本書才會點進這個連結吧，這裡是《零基礎玩轉 LLM 應用全攻略》的 GitHub Repo，所有書籍內會用到的程式碼都放在這邊～
 
-至於書籍勘誤相關資訊會放在[書籍官網](https://llm-book.yenslife.top/)，若你在看這本書遇到哪邊怪怪的，歡迎用以下 E-mail 聯絡我，但請記得說說你是誰，為什麼要寄這封信，以免我把你當成詐騙訊息喔（現在詐騙太多了，哎）
+至於書籍勘誤相關資訊會放在[書籍官網](https://llm-book.yenslife.top/)，若你在看這本書遇到哪邊怪怪的，非常歡迎用官網的 E-mail 聯絡我，第一次寫書嘛我也怕出ㄘㄟˊ🥹，但請記得說說你是誰，為什麼要寄這封信，以免我把你當成詐騙訊息喔（現在詐騙太多了，唉）
 
 ## 我的使用方法
 
@@ -49,24 +51,18 @@ GitHub repository: https://github.com/yenslife/python-llm-for-beginners-demo-cod
 BibTeX 格式：
 ```bibtex
 @book{Pan2026LLMFromScratch,
-  title     = {零基礎玩轉 LLM 應用全攻略：Python × No-Code 實作 AI 開發超簡單},
-  author    = {Pan, Chun-Yen},
+  title     = {零基礎玩轉 {LLM} 應用全攻略：{Python} × {No-Code} 實作 {AI} 開發超簡單},
+  author    = {Pan, Chun{-}Yen},
   year      = {2026},
-  publisher = {drmaster},
+  publisher = {DrMaster},
   isbn      = {9786264144056},
-  url       = {},
-  note      = {Example code available at: https://github.com/yenslife/python-llm-for-beginners-demo-code}
+  note      = {Example code available at \url{https://github.com/yenslife/python-llm-for-beginners-demo-code}}
 }
 ```
 
 ## 購買連結
 
-## TODOs
+歡迎用你喜歡的管道購買本書，後續有更多管道也會持續更新！～
+- [博客來](https://www.books.com.tw/products/0011046117?loc=M_0004_001)
+- [天瓏書局](https://www.tenlong.com.tw/products/9786264144056?list_name=p-r-zh_tw)
 
-一些我還沒做的，放在這邊提醒自己
-
-- [ ] 書籍 Citation 區的購買連結 url 和 isbn
-    - [x] isbn
-    - [ ] url
-- [ ] 若有注意事項，可以補充各章節的 README.md
-- [ ] 購買連結
